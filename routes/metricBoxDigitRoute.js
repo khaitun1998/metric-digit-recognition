@@ -4,19 +4,19 @@ const middleware = require('../middlewares/middleware.js');
 
 const metricBoxDigitController = require('../controllers/users/metricBoxDigit.controller.js');
 
-router.get('/metric-box-digit',
+router.get('/',
 	middleware.verify,
 	metricBoxDigitController.getDigitDataController);
 
-router.post('/metric-box-digit',
+router.post('/',
 	middleware.verify,
 	metricBoxDigitController.addDigitDataController);
 
-router.post('/metric-box-digit/:dataID',
+router.post('/:dataID',
 	middleware.verify,
 	metricBoxDigitController.updateDigitDataController);
 
-router.delete('/metric-box-digit/:dataID',
+router.delete('/:dataID',
 	middleware.verify,
 	metricBoxDigitController.updateDigitDataController);
 

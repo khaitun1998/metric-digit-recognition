@@ -11,7 +11,8 @@ const helmet = require('helmet');
 const fileUpload = require('express-fileupload');
 
 const app = express();
-const port = 3000;
+let port;
+process.env.NODE_ENV === 'development' ? port = 3000 : port = 3002
 
 require('dotenv').config();
 

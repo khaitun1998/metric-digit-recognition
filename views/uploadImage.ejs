@@ -20,26 +20,26 @@
             <div class="file-field">
                 <div class="btn btn-outline-info waves-effect btn-sm float-left">
                     <span>Chọn ảnh</span>
-                    <input type="file">
+                    <input type="file" id="upload-img" name="metric_box_image">
                 </div>
                 <div class="file-path-wrapper">
-                    <input class="file-path validate" name="uploadImg" type="text" placeholder="Tải ảnh" accept="image/jpeg, image/png">
+                    <input class="file-path validate" type="text" placeholder="Tải ảnh" accept="image/jpeg, image/png">
                 </div>
             </div>
             <div class="image-upload">
-                <img class="img-upl" src="/img/eclectricMeter/temp.jpg">
+                <img class="img-upl" src="#">
             </div>
             <div class="detect-number">
-                <input class="form-control" type="text" placeholder="5464564">
+                <input class="form-control" name="digit_value" type="text" placeholder="Chỉ số điện">
             </div>
             <div class="send-number">
-                <button type="button" class="btn btn-primary btn-rounded">Xác nhận</button>
+                <button type="submit" class="btn btn-primary btn-rounded">Xác nhận</button>
             </div>
-
         </form>
     </div>
 
     <!--Footer -->
     <%- include("partials/footer.ejs") %>
+    <script type="text/javascript" src="/js/electricity/uploadImage.js"></script>
 </body>
 </html>

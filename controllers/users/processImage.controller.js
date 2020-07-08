@@ -14,7 +14,8 @@ let img2digitController = async (req, res) => {
 	try{
 		await uploadedFile.mv(newFilePath);
 
-	}catch (e) {
+	}
+	catch (e) {
 		console.log(e)
 	}
 

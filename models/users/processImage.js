@@ -7,7 +7,7 @@ let img2digit = (username, image_path) => {
 		try{
 			await func.checkUserExist(username);
 
-			let pyProgram = spawn(path.join(__dirname, '/../metric_box_digit/bin/python3'),
+			let pyProgram = spawn(path.join(__dirname, '/../metric_box_digit/bin/python3.7'),
 					[path.join(__dirname, '/../metric_digit_recognize/testReader.py'), image_path]);
 
 			pyProgram.stdout.on('data', data => {

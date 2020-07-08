@@ -43,6 +43,8 @@ let MetricBoxDigit = Object.create({
 					queryDB = `INSERT INTO User_MetricBox_Digit(user_id, image_file_name, digit) VALUES (?, ?, ?)`;
 
 				await db.queryDatabase(queryDB, [user.ID, image_file_name, digit_value]);
+
+				resolve('Success');
 			}
 			catch (e) {
 				reject(e);
