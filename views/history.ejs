@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Electricity Management</title>
+    <meta charset="UTF-8">
+    <%- include("partials/head.ejs") %>
+</head>
+
+<body>
+    <%- include("partials/header.ejs") %>
+
+    <div id="loading" style="display: none">
+        <img src="/img/loading.gif" alt="Loading..." />
+    </div>
+
+    <!--Main -->
+    <div class="container"><br>
+        <div class="wrapper-editor">
+            <div class="row d-flex justify-content-center modalWrapper">
+                <div class="modal fade addNewInputs" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="modalAdd"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header text-center">
+                                <h4 class="modal-title w-100 font-weight-bold text-primary ml-5">Giá điện</h4>
+                                <button type="button" class="close text-primary" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body mx-3">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="defaultGroupExample1" name="groupOfDefaultRadios">
+                                    <label class="custom-control-label" for="defaultGroupExample1">Giá nhà nước</label>
+                                </div>
+
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="defaultGroupExample2" name="groupOfDefaultRadios" checked>
+                                    <label class="custom-control-label" for="defaultGroupExample2">Giá nhà trọ</label>
+                                    <input class="form-control" type="text" placeholder="5464564">
+                                </div>
+                            </div>
+                            <div class="modal-footer d-flex justify-content-center buttonAddFormWrapper">
+                                <button class="btn btn-outline-primary btn-block buttonAdd" data-dismiss="modal">Thay đổi
+                                    <i class="fas fa-paper-plane-o ml-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table id="historyTable" class="table table-striped table-hover table-responsive-md">
+            <thead style="background: #a9c6de">
+            <tr>
+                <th class="th-sm text-center">Phòng
+                </th>
+                <th class="th-sm text-center">Tháng
+                </th>
+                <th class="th-sm text-center">Ảnh công tơ
+                </th>
+                <th class="th-sm text-center">Số điện
+                </th>
+                <th class="th-sm text-center">
+                </th>
+            </tr>
+            </thead>
+            <tbody class="text-center">
+            <tr>
+                <td>502</td>
+                <td>7/2020</td>
+                <td></td>
+                <td>50</td>
+                <td>
+                    <a href="" class="btn btn-warning btn-sm btn-rounded buttonEdit waves-effect waves-light" data-toggle="modal" data-target="#modalDeleteCell">
+                        <i class="fas fa-pen ml-1"></i>
+                    </a>
+                    <a href="" class="btn btn-danger btn-sm btn-rounded buttonDelete waves-effect waves-light" data-toggle="modal" data-target="#modalEditCell">
+                        <i class="fas fa-trash-alt ml-1"></i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Modal Delete-->
+        <div class="modal fade" id="modalDeleteCell" tabindex="-1" role="dialog" aria-labelledby="modalDelete"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header text-center">
+                        <h4 class="modal-title w-100 font-weight-bold ml-5 text-danger">Xóa hàng</h4>
+                        <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body mx-3">
+                        <p class="text-center h4">Bạn chắc chắn muốn xóa hàng này?</p>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center deleteButtonsWrapper">
+                        <button type="button" class="btn btn-danger btnYesClass" id="buttonYes" data-dismiss="modal">Có</button>
+                        <button type="button" class="btn btn-primary btnNoClass" id="buttonNo" data-dismiss="modal">Không</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Footer -->
+    <%- include("partials/footer.ejs") %>
+    <script type="text/javascript" src="/js/electricity/history.js"></script>
+</body>
+</html>

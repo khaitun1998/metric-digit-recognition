@@ -1,0 +1,46 @@
+<footer class="page-footer font-small blue">
+    <div class="footer-copyright text-center py-3">
+        &copy; 2020 Copyright:
+        <a> CuongNXV - KhaiDQ </a>
+    </div>
+</footer>
+
+<script type="text/javascript"  src="/js/jquery-3.4.0.min.js"></script>
+<script type="text/javascript" src="/js/addons/datatables.min.js"></script>
+<script type="text/javascript" src="/js/addons/datatables-select.min.js"></script>
+<script type="text/javascript" src="/js/popper.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.js"></script>
+<script type="text/javascript" src="/js/mdb.min.js"></script>
+<script type="text/javascript" src="/js/electricity/loading.js"></script>
+<script type="text/javascript" src="https://momentjs.com/downloads/moment.js"></script>
+<script>
+	let pathName = window.location.pathname;
+
+	$(`ul.navbar-nav > li > a[href="${pathName}"]`).parent().addClass('active');
+
+    if((sessionStorage.getItem('metric_box_token') !== null) &&
+        (sessionStorage.getItem('metric_box_expire') !== null )){
+        if((parseInt(sessionStorage.getItem('metric_box_expire')) - moment().unix() <= 0)){
+			toastr.warning('Phiên làm việc hết hạn. Đang điều hướng về trang đăng nhập..');
+
+			setTimeout(function(){
+				window.location.href = '/login'
+			}, 2000)
+        }
+    }
+    else{
+        toastr.error('Có lỗi xảy ra. Đang điều hướng về trang đăng nhập...');
+
+		setTimeout(function(){
+			window.location.href = '/login'
+		}, 2000)
+    }
+
+    $('a#logout').on('click', function(){
+    	toastr.success('Đang đăng xuất...');
+
+		setTimeout(function(){
+			window.location.href = '/login'
+		}, 2000)
+    })
+</script>

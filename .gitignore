@@ -1,0 +1,6 @@
+.env
+node_modules/
+public/uploads/
+.idea/
+.DS_Store
+models/metric_box_digit/

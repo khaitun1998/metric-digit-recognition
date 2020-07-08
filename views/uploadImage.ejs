@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Electricity Management</title>
+    <meta charset="UTF-8">
+    <%- include("partials/head.ejs") %>
+    <link rel="stylesheet" href="/css/electricity/uploadImage.css">
+</head>
+
+<body>
+    <%- include("partials/header.ejs") %>
+
+    <div id="loading" style="display: none">
+        <img src="/img/loading.gif" alt="Loading..." />
+    </div>
+
+    <!--Main -->
+    <div class="container"><br>
+        <form class="md-form" action="#" method="POST">
+            <div class="file-field">
+                <div class="btn btn-outline-info waves-effect btn-sm float-left">
+                    <span>Chọn ảnh</span>
+                    <input type="file">
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" name="uploadImg" type="text" placeholder="Tải ảnh" accept="image/jpeg, image/png">
+                </div>
+            </div>
+            <div class="image-upload">
+                <img class="img-upl" src="/img/eclectricMeter/temp.jpg">
+            </div>
+            <div class="detect-number">
+                <input class="form-control" type="text" placeholder="5464564">
+            </div>
+            <div class="send-number">
+                <button type="button" class="btn btn-primary btn-rounded">Xác nhận</button>
+            </div>
+
+        </form>
+    </div>
+
+    <!--Footer -->
+    <%- include("partials/footer.ejs") %>
+</body>
+</html>
