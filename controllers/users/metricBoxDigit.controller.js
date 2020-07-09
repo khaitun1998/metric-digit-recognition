@@ -9,10 +9,10 @@ let getDigitDataController = async (req, res) => {
 
 	const schema = Joi.object({
 		start_month: Joi.string()
-			.required(),
+			.allow('', null),
 
 		end_month: Joi.string()
-			.required()
+			.allow('', null)
 	})
 
 	const result = schema.validate(req.query);

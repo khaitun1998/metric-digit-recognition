@@ -1,6 +1,7 @@
 const path = require('path');
 const crypto = require('crypto');
 const fs = require('fs');
+const moment = require('moment');
 
 const processImageModel = require('../../models/users/processImage.js');
 
@@ -50,4 +51,44 @@ let img2digitController = async (req, res) => {
 	}
 }
 
+let img2digitMobileController = async (req, res) => {
+	let username = req.decoded.data,
+			base64Img = req.body.metric_box_image;
+
+	let fileName = `${moment().unix()}.png`,
+		filePath = path.join(__dirname, '../../public/uploads', fileName);
+
+	try{
+		fs.writeFileSync(filePath,
+					base64Img.replace(/^data:image\/[a-z]+;base64,/, ""),
+					'base64');
+
+		let img2digitResult = await processImageModel.img2digit(username, filePath);
+
+		await res.json({
+			success: true,
+			data: img2digitResult
+		})
+
+		fs.unlinkSync(filePath);
+	}
+	catch (e) {
+		try{
+			await fs.unlinkSync(filePath);
+		}
+		catch (e_) {
+			await res.json({
+				success: false,
+				message: e
+			})
+		}
+
+		await res.json({
+			success: false,
+			message: e
+		})
+	}
+}
+
 exports.img2digitController = img2digitController;
+exports.img2digitMobileController = img2digitMobileController;

@@ -8,4 +8,8 @@ router.post('/img2digit',
 	middleware.verify,
 	processImageController.img2digitController);
 
+router.post('/img2digit-mobile',
+	middleware.verify,
+	processImageController.img2digitMobileController);
+
 module.exports = router

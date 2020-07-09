@@ -18,6 +18,6 @@ router.post('/:dataID',
 
 router.delete('/:dataID',
 	middleware.verify,
-	metricBoxDigitController.updateDigitDataController);
+	metricBoxDigitController.deleteDigitDataController);
 
 module.exports = router;

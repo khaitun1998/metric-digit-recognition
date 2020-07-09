@@ -37,6 +37,10 @@ function readURL(input) {
     if (input.files && input.files[0]) {
         let reader = new FileReader();
 
+        $('div.image-upload')
+            .empty()
+            .append('<img class="img-upl" src="#">');
+
         reader.onload = function (e) {
             $('img.img-upl').attr('src', e.target.result);
         }

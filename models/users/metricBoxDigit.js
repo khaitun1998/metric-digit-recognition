@@ -9,7 +9,7 @@ let MetricBoxDigit = Object.create({
 					queryDB;
 
 				if(start_month === '' && end_month === ''){
-					queryDB = 'SELECT * FROM User_MetricBox_Digit WHERE user_id = ?';
+					queryDB = 'SELECT * FROM User_MetricBox_Digit WHERE user_id = ? ORDER BY date DESC';
 
 					let queryData = await db.queryDatabase(queryDB, [user.ID]);
 
@@ -19,7 +19,7 @@ let MetricBoxDigit = Object.create({
 					reject('Invalid Input');
 				}
 				else{
-					queryDB = 'SELECT * FROM User_MetricBox_Digit WHERE user_id = ? AND date BETWEEN ? AND ?';
+					queryDB = 'SELECT * FROM User_MetricBox_Digit WHERE user_id = ? AND date BETWEEN ? AND ? ORDER BY date DESC';
 
 					start_month = moment(start_month).format('MM/YYYY');
 					end_month !== '' ? end_month = moment(end_month).format('MM/YYYY')

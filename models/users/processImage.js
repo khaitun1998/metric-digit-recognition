@@ -10,7 +10,7 @@ let img2digit = (username, image_path) => {
 			let pyProgram
 
 			if(process.env.NODE_ENV === 'development'){
-				pyProgram = spawn(path.join(__dirname, '/../metric_box_digit/bin/python3.7'),
+				pyProgram = spawn(path.join(__dirname, '/../metric_box_digit/bin/python3'),
 					[path.join(__dirname, '/../metric_digit_recognize/testReader.py'), image_path]);
 			}
 			else{
