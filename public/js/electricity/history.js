@@ -1,7 +1,23 @@
 const _token = sessionStorage.getItem('metric_box_token');
 
 $(document).ready(function () {
-    historyObj.getHistory();
+    let roomList = sessionStorage.getItem('metric_box_user_room_list').split(',');
+
+    let defaultRoom = roomList[0];
+
+    roomList.forEach(value => {
+        $('select#roomList').append(`<option value="${value}">${value}</option>`)
+    })
+
+    $('button.buttonChangeRoom').on('click', () => {
+        let room = $('select#roomList').val();
+
+        toastr.success(`Lựa chọn phòng ${room} thành công`);
+
+        historyObj.getHistory(room);
+    })
+
+    historyObj.getHistory(defaultRoom);
 
     $('#buttonYes').on('click', function(){
         let dataID = $('#dataID').val();
@@ -11,17 +27,15 @@ $(document).ready(function () {
 });
 
 let historyObj = Object.create({
-    getHistory: function(start_month = '', end_month = '', token=_token){
+    getHistory: function(room, start_month = '', end_month = '', token=_token){
         $.ajax({
-            url:`/api/metric-box-digit?start_month=${start_month}&&end_month=${end_month}`,
+            url:`/api/metric-box-digit?start_month=${start_month}&&end_month=${end_month}&&room=${room}`,
             method: 'GET',
             beforeSend: xhr => {
                 xhr.setRequestHeader('x-access-token', token);
             },
             success: r => {
                 if(r.success === true){
-                    console.log(r.data);
-
                     $('table#historyTable > tbody').empty();
 
                     r.data.forEach(function(value){

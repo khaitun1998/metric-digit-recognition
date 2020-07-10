@@ -2,7 +2,6 @@ const Joi = require('@hapi/joi');
 const crypto = require('crypto');
 const path = require('path');
 const moment = require('moment');
-const fs = require('fs');
 
 const metricBoxDigitModel = require('../../models/users/metricBoxDigit.js');
 const processImageController = require('./processImage.controller');
@@ -15,6 +14,9 @@ let getDigitDataController = async (req, res) => {
 			.allow('', null),
 
 		end_month: Joi.string()
+			.allow('', null),
+
+		room: Joi.number()
 			.allow('', null)
 	})
 
@@ -23,7 +25,10 @@ let getDigitDataController = async (req, res) => {
 	if(String(result.error) === 'undefined'){
 		try{
 			let data = await metricBoxDigitModel.MetricBoxDigit
-				.getDigitData(username, result.value.start_month, result.value.end_month);
+				.getDigitData(username,
+					result.value.room,
+					result.value.start_month,
+					result.value.end_month);
 
 			await res.json({
 				success: true,
@@ -51,6 +56,9 @@ let addDigitDataController = async (req, res) => {
 
 	const schema = Joi.object({
 		digit_value: Joi.number()
+			.required(),
+
+		room_number: Joi.number()
 			.required()
 	})
 
@@ -65,7 +73,7 @@ let addDigitDataController = async (req, res) => {
 			await uploadedFile.mv(newFilePath);
 
 			await metricBoxDigitModel.MetricBoxDigit
-				.addDigitData(username, fileName, result.value.digit_value);
+				.addDigitData(username, fileName, result.value.digit_value, result.value.room_number);
 
 			await res.json({
 				success: true

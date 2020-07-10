@@ -52,6 +52,9 @@
         $(document).ready(function(){
         	sessionStorage.removeItem('metric_box_token');
             sessionStorage.removeItem('metric_box_expire');
+			sessionStorage.removeItem('metric_box_price_type');
+			sessionStorage.removeItem('metric_box_custom_price');
+			sessionStorage.removeItem('metric_box_user_room_list')
 
         	$('button.btn').on('click', function(){
 				let user_val = $('#orangeForm-name').val(),
@@ -70,6 +73,9 @@
 
 							sessionStorage.setItem('metric_box_token', r.result.token)
 							sessionStorage.setItem('metric_box_expire', String(moment().add('1', 'days').unix()));
+							sessionStorage.setItem('metric_box_price_type', '0');
+							sessionStorage.setItem('metric_box_custom_price', '0');
+							sessionStorage.setItem('metric_box_user_room_list', r.result.roomList);
 
 							setTimeout(function(){
 								window.location.href = '/'

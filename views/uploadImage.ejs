@@ -16,24 +16,41 @@
 
     <!--Main -->
     <div class="container"><br>
-        <form class="md-form" action="#" method="POST">
-            <div class="file-field">
-                <div class="btn btn-outline-info waves-effect btn-sm float-left">
-                    <span>Chọn ảnh</span>
-                    <input type="file" id="upload-img" name="metric_box_image">
-                </div>
-                <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text" placeholder="Tải ảnh" accept="image/jpeg, image/png">
-                </div>
+        <h2>Số hóa ảnh công tơ điện</h2>
+
+        <div class="row">
+            <div class="col-12">
+                <span>Một số lưu ý khi sử dụng</span>
+                <span>
+                    <ul>
+                        <li>Chỉ tải tệp tin ảnh có định dạng <b>JPEG, JPG hoặc PNG</b></li>
+                        <li>Sau khi lựa chọn ảnh thành công, hệ thống sẽ tiến hành nhận diện chữ số từ công tơ điện. Khi quá trình kết thúc, <b>vui lòng kiểm tra lại kết quả và sửa lại các sai sót (nếu có)</b></li>
+                    </ul>
+                </span>
+
+                <form class="md-form" action="#" method="POST">
+                    <div class="file-field">
+                        <div class="btn btn-outline-info waves-effect btn-sm float-left">
+                            <span>Chọn ảnh</span>
+                            <input type="file" id="upload-img" name="metric_box_image">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" placeholder="Tải ảnh" accept="image/jpeg, image/png">
+                        </div>
+                    </div>
+                    <div class="image-upload"></div>
+                    <div class="detect-number">
+                        <input class="form-control" name="digit_value" type="text" placeholder="Chỉ số điện">
+                    </div>
+                    <div class="detect-number">
+                        <input class="form-control" name="room_number" type="number" placeholder="Phòng">
+                    </div>
+                    <div class="send-number">
+                        <button type="submit" class="btn btn-primary btn-rounded">Xác nhận</button>
+                    </div>
+                </form>
             </div>
-            <div class="image-upload"></div>
-            <div class="detect-number">
-                <input class="form-control" name="digit_value" type="text" placeholder="Chỉ số điện">
-            </div>
-            <div class="send-number">
-                <button type="submit" class="btn btn-primary btn-rounded">Xác nhận</button>
-            </div>
-        </form>
+        </div>
     </div>
 
     <!--Footer -->

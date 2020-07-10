@@ -8,33 +8,46 @@ let login = (username, password) => {
     return new Promise((resolve, reject) => {
         func.checkUserExist(username)
             .then(r => {
-                let strPassword = Buffer.from(r.password, 'binary').toString('utf8');
+                let strPassword = Buffer.from(r.password, 'binary').toString('utf8'),
+                    queryRoomList = "SELECT DISTINCT(room) FROM User_MetricBox_Digit WHERE user_id = ?";
 
-                bcrypt.compare(password, strPassword, (err, result) => {
+                bcrypt.compare(password, strPassword, async (err, result) => {
                     if(err) reject(err)
                     else{
                         let responseObj;
 
                         if(result === true){
-                            let _token = jwt.sign({
-                                    data: username,
-                                    role: r.privilege
-                                },
-                                secretKey,
-                        {
-                                    expiresIn: `${process.env.TOKEN_EXPIRATION}h`
-                                });
+                            try{
+                                let roomList = await db.queryDatabase(queryRoomList, r.ID),
+                                    arrRoomList = [];
 
-                            responseObj = {
-                                token: _token,
-                                username: username,
-                                email: r.email,
-                                fullname: r.fullname,
-                                expires: `${process.env.TOKEN_EXPIRATION}h`,
-                                role: r.privilege
+                                roomList.forEach(value => {
+                                    arrRoomList.push(value.room);
+                                })
+
+
+                                let _token = jwt.sign({
+                                        data: username,
+                                        role: r.privilege
+                                    },
+                                    secretKey,
+                                    {
+                                        expiresIn: `${process.env.TOKEN_EXPIRATION}h`
+                                    });
+
+                                responseObj = {
+                                    token: _token,
+                                    username: username,
+                                    expires: `${process.env.TOKEN_EXPIRATION}h`,
+                                    role: r.privilege,
+                                    roomList: arrRoomList
+                                }
+
+                                resolve(responseObj)
                             }
-
-                            resolve(responseObj)
+                            catch (e) {
+                                reject(e);
+                            }
                         }
                         else{
                             reject("Wrong username/password!!");

@@ -2,30 +2,39 @@ const db = require('../database.js');
 const func = require('../function.js');
 
 let MetricBoxDigit = Object.create({
-	getDigitData: (username, start_month = '', end_month = '') => {
+	getDigitData: (username, room = '', start_month = '', end_month = '') => {
 		return new Promise(async (resolve, reject) => {
 			try {
 				let user = await func.checkUserExist(username),
 					queryDB;
 
 				if(start_month === '' && end_month === ''){
-					queryDB = 'SELECT * FROM User_MetricBox_Digit WHERE user_id = ? ORDER BY date DESC';
+					if(room === ''){
+						queryDB = 'SELECT * FROM User_MetricBox_Digit WHERE user_id = ? ORDER BY date DESC';
 
-					let queryData = await db.queryDatabase(queryDB, [user.ID]);
+						let queryData = await db.queryDatabase(queryDB, [user.ID]);
 
-					queryData.length > 0 ? resolve(queryData) : reject('No data');
+						queryData.length > 0 ? resolve(queryData) : reject('No data');
+					}
+					else{
+						queryDB = 'SELECT * FROM User_MetricBox_Digit WHERE user_id = ? AND room = ? ORDER BY date DESC';
+
+						let queryData = await db.queryDatabase(queryDB, [user.ID, room]);
+
+						queryData.length > 0 ? resolve(queryData) : reject('No data');
+					}
 				}
-				else if(start_month === '' && end_month !== ''){
+				else if(start_month !== '' && end_month === ''){
 					reject('Invalid Input');
 				}
 				else{
-					queryDB = 'SELECT * FROM User_MetricBox_Digit WHERE user_id = ? AND date BETWEEN ? AND ? ORDER BY date DESC';
+					queryDB = 'SELECT * FROM User_MetricBox_Digit WHERE user_id = ? AND room = ? AND date BETWEEN ? AND ? ORDER BY date DESC';
 
 					start_month = moment(start_month).format('MM/YYYY');
 					end_month !== '' ? end_month = moment(end_month).format('MM/YYYY')
 						: end_month = moment().format('MM/YYYY');
 
-					let queryData = await db.queryDatabase(queryDB, [user.ID, start_month, end_month]);
+					let queryData = await db.queryDatabase(queryDB, [user.ID, room, start_month, end_month]);
 
 					queryData.length > 0 ? resolve(queryData) : reject('No data');
 				}
