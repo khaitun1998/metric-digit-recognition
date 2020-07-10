@@ -36,13 +36,13 @@ let MetricBoxDigit = Object.create({
 		})
 	},
 
-	addDigitData: (username, image_file_name, digit_value) => {
+	addDigitData: (username, image_file_name, digit_value, room_number) => {
 		return new Promise(async (resolve, reject) => {
 			try{
 				let user = await func.checkUserExist(username),
-					queryDB = `INSERT INTO User_MetricBox_Digit(user_id, image_file_name, digit) VALUES (?, ?, ?)`;
+					queryDB = `INSERT INTO User_MetricBox_Digit(user_id, image_file_name, digit, room) VALUES (?, ?, ?, ?)`;
 
-				await db.queryDatabase(queryDB, [user.ID, image_file_name, digit_value]);
+				await db.queryDatabase(queryDB, [user.ID, image_file_name, digit_value, room_number]);
 
 				resolve('Success');
 			}

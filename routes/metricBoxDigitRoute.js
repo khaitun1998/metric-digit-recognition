@@ -12,6 +12,10 @@ router.post('/',
 	middleware.verify,
 	metricBoxDigitController.addDigitDataController);
 
+router.post('/upload/mobile',
+	middleware.verify,
+	metricBoxDigitController.addDigitDataMobileController);
+
 router.post('/:dataID',
 	middleware.verify,
 	metricBoxDigitController.updateDigitDataController);

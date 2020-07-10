@@ -1,8 +1,11 @@
 const Joi = require('@hapi/joi');
 const crypto = require('crypto');
 const path = require('path');
+const moment = require('moment');
+const fs = require('fs');
 
 const metricBoxDigitModel = require('../../models/users/metricBoxDigit.js');
+const processImageController = require('./processImage.controller');
 
 let getDigitDataController = async (req, res) => {
 	let username = req.decoded.data;
@@ -84,6 +87,55 @@ let addDigitDataController = async (req, res) => {
 	}
 };
 
+let addDigitDataMobileController = async (req, res) => {
+	let username = req.decoded.data;
+
+	const schema = Joi.object({
+		digit_value: Joi.number()
+			.required(),
+
+		img_link: Joi.string()
+			.required(),
+
+		room_number: Joi.number()
+			.required()
+	})
+
+	const result = schema.validate(req.body);
+
+	if(String(result.error) === 'undefined'){
+		let fileName = `${crypto.createHash('md5').update(String(moment().unix())).digest('hex')}.png`,
+			filePath = path.join(__dirname, `../../public/uploads/${username}`, fileName);
+
+		try{
+			await processImageController.downloadFile(result.value.img_link, filePath)
+
+			await metricBoxDigitModel.MetricBoxDigit
+				.addDigitData(username,
+					fileName,
+					result.value.digit_value,
+					result.value.room_number);
+
+			await res.json({
+				success: true
+			})
+		}
+		catch (e) {
+			console.log(e);
+			await res.json({
+				success: false,
+				message: e
+			})
+		}
+	}
+	else{
+		await res.json({
+			success: false,
+			message: String(result.error)
+		})
+	}
+};
+
 let updateDigitDataController = async (req, res) => {
 	let username = req.decoded.data,
 		dataID = req.params.dataID;
@@ -125,5 +177,6 @@ let deleteDigitDataController = async (req, res) => {
 
 exports.getDigitDataController = getDigitDataController;
 exports.addDigitDataController = addDigitDataController;
+exports.addDigitDataMobileController = addDigitDataMobileController;
 exports.updateDigitDataController = updateDigitDataController;
 exports.deleteDigitDataController = deleteDigitDataController;

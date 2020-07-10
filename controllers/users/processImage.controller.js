@@ -2,8 +2,26 @@ const path = require('path');
 const crypto = require('crypto');
 const fs = require('fs');
 const moment = require('moment');
+const axios = require('axios')
 
 const processImageModel = require('../../models/users/processImage.js');
+
+async function downloadFile (url, filePath) {
+	const writer = fs.createWriteStream(filePath)
+
+	const response = await axios({
+		url,
+		method: 'GET',
+		responseType: 'stream'
+	})
+
+	response.data.pipe(writer)
+
+	return new Promise((resolve, reject) => {
+		writer.on('finish', resolve)
+		writer.on('error', reject)
+	})
+}
 
 let img2digitController = async (req, res) => {
 	let username = req.decoded.data;
@@ -53,15 +71,12 @@ let img2digitController = async (req, res) => {
 
 let img2digitMobileController = async (req, res) => {
 	let username = req.decoded.data,
-			base64Img = req.body.metric_box_image;
+		img_link = req.body.img_link;
 
-	let fileName = `${moment().unix()}.png`,
-		filePath = path.join(__dirname, '../../public/uploads', fileName);
+	let filePath = path.join(__dirname, '../../public/uploads/', `${moment().unix()}.jpg`)
 
 	try{
-		fs.writeFileSync(filePath,
-					base64Img.replace(/^data:image\/[a-z]+;base64,/, ""),
-					'base64');
+		await downloadFile(img_link, filePath);
 
 		let img2digitResult = await processImageModel.img2digit(username, filePath);
 
@@ -79,10 +94,11 @@ let img2digitMobileController = async (req, res) => {
 		catch (e_) {
 			await res.json({
 				success: false,
-				message: e
+				message: e_
 			})
 		}
 
+		console.log(e);
 		await res.json({
 			success: false,
 			message: e
@@ -92,3 +108,4 @@ let img2digitMobileController = async (req, res) => {
 
 exports.img2digitController = img2digitController;
 exports.img2digitMobileController = img2digitMobileController;
+exports.downloadFile = downloadFile;

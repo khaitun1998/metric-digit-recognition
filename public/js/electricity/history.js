@@ -31,6 +31,7 @@ let historyObj = Object.create({
                         $('table#historyTable > tbody')
                             .append(`<tr>
                                         <td>${value.ID}</td>
+                                        <td>${value.room}</td>
                                         <td>${moment(value.date).format('MM/YYYY')}</td>
                                         <td><img src="${image_path}" width="250" height="auto"></img></td>
                                         <td>${value.digit}</td>
